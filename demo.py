@@ -1,4 +1,4 @@
-# __author__ = 'guchaojie'
+# __author__ = 'Yaoshi'
 # -*- coding: utf-8 -*-
 import os,sys
 from PIL import Image,ImageEnhance,ImageFilter,ImageGrab

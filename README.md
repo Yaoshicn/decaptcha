@@ -18,11 +18,15 @@ enhancer = ImageEnhance.Brightness(img)  # 增加亮度
 img = enhancer.enhance(2)
 ```
 ## 图像处理
-
-### 1.图片清除噪点
-### 2.图片清除干扰线
-### 3.图片切割
-### 4.信息输出
+### 静态图片
+#### 1.图片清除噪点
+#### 2.图片清除干扰线
+#### 3.图片切割
+#### 4.信息输出
+### 动态图片
+#### 1.按帧转存 GIF
+#### 2.读取每个 GIF 的 Duration 属性
+#### 3.找到 Duration 最长的图片，后同静态图片处理
 ## 验证码识别
 ### KNN
 ```Python
@@ -42,7 +46,7 @@ def classify0(inX, dataSet, labels, k):
     return sortedClassCount[0][0]
 ```
 ### SVM
-识别1和9数字,设定成一个二分类问题
+根据算法的性质，我们把问题设定成一个二分类问题：识别数字1和9（当然也可以是其他的任意两个数字）
 - http://www.csie.ntu.edu.tw/~cjlin/libsvm/index.html?js=1#svm-toy-js
 - http://www.pami.sjtu.edu.cn/people/gpliu/document/libsvm_src.pdf
 

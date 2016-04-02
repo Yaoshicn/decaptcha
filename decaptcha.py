@@ -23,7 +23,7 @@ class Decaptcha:
 
     def crawler(self, counter):
         ip = ''
-        port = 
+        port = 1080
         url = ''
         filename = "images/MJ%d.jpg" % counter
         opener = urllib2.build_opener(SocksiPyHandler(socks.SOCKS5, ip, port))

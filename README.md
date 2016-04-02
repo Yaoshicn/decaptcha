@@ -24,7 +24,7 @@ img = enhancer.enhance(2)
 ### 3.图片切割
 ### 4.信息输出
 ## 验证码识别
-### KNN(K邻近算法)
+### KNN
 ```Python
 # kNN algorithm
 def classify0(inX, dataSet, labels, k):
@@ -41,8 +41,8 @@ def classify0(inX, dataSet, labels, k):
     sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 ```
-### SVM(支持向量机)
-TBD
+### SVM
+识别1和9数字,设定成一个二分类问题
 - http://www.csie.ntu.edu.tw/~cjlin/libsvm/index.html?js=1#svm-toy-js
 - http://www.pami.sjtu.edu.cn/people/gpliu/document/libsvm_src.pdf
 

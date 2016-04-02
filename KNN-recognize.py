@@ -7,16 +7,16 @@ from numpy import *
 def handwritingClassTest():
     hwLabels = []
     # trainingFileList = os.listdir('trainingdigit/trainingset')
-    trainingFileList = listdirinmac('trainingdigit/trainingset')
+    trainingFileList = listDirInMac('trainingdigit/trainingdigits-for-knn')
     m = len(trainingFileList)
     trainingMat = zeros((m, 1024))
     for i in range(m):
         fnameStr = trainingFileList[i]
         classStr = fnameStr.split("_")[0]
         hwLabels.append(classStr)
-        trainingMat[i, :] = img2vector('trainingdigit/trainingset/%s' % fnameStr)
+        trainingMat[i, :] = img2vector('trainingdigit/trainingdigits-for-knn/%s' % fnameStr)
     # testFileList = os.listdir('trainingdigit/testdigits')
-    testFileList = listdirinmac('trainingdigit/testdigits')
+    testFileList = listDirInMac('trainingdigit/testdigits-for-knn')
     errorCount = 0.0
     mTest = len(testFileList)
     for i in range(mTest):
@@ -89,8 +89,8 @@ def autoNorm(dataSet):
     normDataSet = normDataSet / tile(ranges, (m, 1))  # element wise divide
     return normDataSet, ranges, minVals
 
-# Foe the .DS_Store in the OS X
-def listdirinmac(path):
+# For the .DS_Store in the OS X
+def listDirInMac(path):
     os_list = os.listdir(path)
     for item in os_list:
         if item.startswith('.') and os.path.isfile(os.path.join(path, item)):

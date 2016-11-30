@@ -1,4 +1,4 @@
-# __author__ = 'guchaojie'
+# __author__ = 'Yaoshi'
 # -*- coding: utf-8 -*-
 # This py file is to the split the captcha into single alphabet or number
 from __future__ import division
@@ -12,14 +12,14 @@ from PIL import Image, ImageEnhance, ImageFilter, ImageGrab
 class Decaptcha:
     def __init__(self, new_img_id, counter, number):
         while counter < number:
-            print '正在处理第%d张' % counter
+            print 'Now processing pic no %d' % counter
             tmp_file_name = self.crawler(counter)
             temp_img_id = self.img2binary(img=tmp_file_name, new_img_id=new_img_id, counter=counter)
-            print '剪切得到数字个数:', temp_img_id - new_img_id
+            print 'Get %d alphabet or number', temp_img_id - new_img_id
             new_img_id = temp_img_id
             counter += 1
             time.sleep(1)
-        print '截取成功率:', new_img_id / (counter * 4)
+        print 'Cut out success ratio:', new_img_id / (counter * 4)
 
     def crawler(self, counter):
         ip = ''
@@ -49,27 +49,27 @@ class Decaptcha:
         assert isinstance(img, Image.Image)
         img = img.filter(ImageFilter.MedianFilter(3))  # use median filter to de-noise
         img.save("filter-images/%d.png" % counter, "PNG")
-        enhancer = ImageEnhance.Contrast(img)  # 增加对比对
+        enhancer = ImageEnhance.Contrast(img)
         img = enhancer.enhance(2)
-        enhancer = ImageEnhance.Sharpness(img)  # 锐化
+        enhancer = ImageEnhance.Sharpness(img)
         img = enhancer.enhance(2)
-        enhancer = ImageEnhance.Brightness(img)  # 增加亮度
+        enhancer = ImageEnhance.Brightness(img)
         img = enhancer.enhance(2)
         img = img.convert("L")  # transfer the image into gray-scale
         img.save("gray-images/%d.png" % counter, "PNG")
         length = img.size[0]
-        width = img.size[1]  # find the length and the width of the image
+        width = img.size[1]     # find the length and the width of the image
         # print 'size-length:', length, 'width', width
         counter = 0
-        num_of_valid_pix = []  # this data structure is to store the number of valid pixels for each column.
-        pixdata = img.load()  # load the image data into the @pixdata
+        num_of_valid_pix = []   # this data structure is to store the number of valid pixels for each column.
+        pixdata = img.load()    # load the image data into the @pixdata
         # retrival all the pixels in the image
         for x in range(0, length):
             for y in range(0, width):
                 # change the valve
                 if pixdata[x, y] < 200:
                     counter += 1
-                    pixdata[x, y] = 0  # reset the pixdata to binary form, 1 represents for valid pixel
+                    pixdata[x, y] = 0    # reset the pixdata to binary form, 1 represents for valid pixel
                 else:
                     pixdata[x, y] = 255  # reset the pixdata to binary form, 0 represents for invalid pixel
             num_of_valid_pix.append(counter)

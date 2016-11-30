@@ -1,4 +1,4 @@
-# __author__ = 'guchaojie'
+# __author__ = 'Yaoshi'
 # -*- coding: utf-8 -*-
 import os
 from numpy import *
@@ -6,7 +6,7 @@ from time import sleep
 
 
 def loadDataSet(fileName):
-    dataMat = [];
+    dataMat = []
     labelMat = []
     fr = open(fileName)
     for line in fr.readlines():
@@ -32,9 +32,9 @@ def clipAlpha(aj, H, L):
 
 
 def smoSimple(dataMatIn, classLabels, C, toler, maxIter):
-    dataMatrix = mat(dataMatIn);
+    dataMatrix = mat(dataMatIn)
     labelMat = mat(classLabels).transpose()
-    b = 0;
+    b = 0
     m, n = shape(dataMatrix)
     alphas = mat(zeros((m, 1)))
     iter = 0
@@ -47,8 +47,8 @@ def smoSimple(dataMatIn, classLabels, C, toler, maxIter):
                 j = selectJrand(i, m)
                 fXj = float(multiply(alphas, labelMat).T * (dataMatrix * dataMatrix[j, :].T)) + b
                 Ej = fXj - float(labelMat[j])
-                alphaIold = alphas[i].copy();
-                alphaJold = alphas[j].copy();
+                alphaIold = alphas[i].copy()
+                alphaJold = alphas[j].copy()
                 if (labelMat[i] != labelMat[j]):
                     L = max(0, alphas[j] - alphas[i])
                     H = min(C, C + alphas[j] - alphas[i])
@@ -122,8 +122,8 @@ def calcEk(oS, k):
 
 
 def selectJ(i, oS, Ei):  # this is the second choice -heurstic, and calcs Ej
-    maxK = -1;
-    maxDeltaE = 0;
+    maxK = -1
+    maxDeltaE = 0
     Ej = 0
     oS.eCache[i] = [1, Ei]  # set valid #choose the alpha that gives the maximum delta E
     validEcacheList = nonzero(oS.eCache[:, 0].A)[0]
@@ -133,8 +133,8 @@ def selectJ(i, oS, Ei):  # this is the second choice -heurstic, and calcs Ej
             Ek = calcEk(oS, k)
             deltaE = abs(Ei - Ek)
             if (deltaE > maxDeltaE):
-                maxK = k;
-                maxDeltaE = deltaE;
+                maxK = k
+                maxDeltaE = deltaE
                 Ej = Ek
         return maxK, Ej
     else:  # in this case (first time around) we don't have any valid eCache values
@@ -153,8 +153,8 @@ def innerL(i, oS):
     if ((oS.labelMat[i] * Ei < -oS.tol) and (oS.alphas[i] < oS.C)) or (
                 (oS.labelMat[i] * Ei > oS.tol) and (oS.alphas[i] > 0)):
         j, Ej = selectJ(i, oS, Ei)  # this has been changed from selectJrand
-        alphaIold = oS.alphas[i].copy();
-        alphaJold = oS.alphas[j].copy();
+        alphaIold = oS.alphas[i].copy()
+        alphaJold = oS.alphas[j].copy()
         if (oS.labelMat[i] != oS.labelMat[j]):
             L = max(0, oS.alphas[j] - oS.alphas[i])
             H = min(oS.C, oS.C + oS.alphas[j] - oS.alphas[i])
@@ -188,7 +188,7 @@ def innerL(i, oS):
 def smoP(dataMatIn, classLabels, C, toler, maxIter, kTup=('lin', 0)):  # full Platt SMO
     oS = optStruct(mat(dataMatIn), mat(classLabels).transpose(), C, toler, kTup)
     iter = 0
-    entireSet = True;
+    entireSet = True
     alphaPairsChanged = 0
     while (iter < maxIter) and ((alphaPairsChanged > 0) or (entireSet)):
         alphaPairsChanged = 0
@@ -212,7 +212,7 @@ def smoP(dataMatIn, classLabels, C, toler, maxIter, kTup=('lin', 0)):  # full Pl
 
 
 def calcWs(alphas, dataArr, classLabels):
-    X = mat(dataArr);
+    X = mat(dataArr)
     labelMat = mat(classLabels).transpose()
     m, n = shape(X)
     w = zeros((n, 1))
@@ -224,11 +224,11 @@ def calcWs(alphas, dataArr, classLabels):
 def testRbf(k1=1.3):
     dataArr, labelArr = loadDataSet('testSetRBF.txt')
     b, alphas = smoP(dataArr, labelArr, 200, 0.0001, 10000, ('rbf', k1))  # C=200 important
-    datMat = mat(dataArr);
+    datMat = mat(dataArr)
     labelMat = mat(labelArr).transpose()
     svInd = nonzero(alphas.A > 0)[0]
     sVs = datMat[svInd]  # get matrix of only support vectors
-    labelSV = labelMat[svInd];
+    labelSV = labelMat[svInd]
     print "there are %d Support Vectors" % shape(sVs)[0]
     m, n = shape(datMat)
     errorCount = 0
@@ -239,7 +239,7 @@ def testRbf(k1=1.3):
     print "the training error rate is: %f" % (float(errorCount) / m)
     dataArr, labelArr = loadDataSet('testSetRBF2.txt')
     errorCount = 0
-    datMat = mat(dataArr);
+    datMat = mat(dataArr)
     labelMat = mat(labelArr).transpose()
     m, n = shape(datMat)
     for i in range(m):
@@ -250,12 +250,12 @@ def testRbf(k1=1.3):
 
 
 def img2vector(filename):
-    returnVect = zeros((1,1024))
+    returnVect = zeros((1, 1024))
     fr = open(filename)
     for i in range(32):
         lineStr = fr.readline()
         for j in range(32):
-            returnVect[0,32*i+j] = int(lineStr[j])
+            returnVect[0, 32 * i + j] = int(lineStr[j])
     return returnVect
 
 
@@ -280,11 +280,11 @@ def loadImages(dirName):
 def testDigits(kTup=('rbf', 10)):
     dataArr, labelArr = loadImages('trainingdigit/trainingdigits-for-svm')
     b, alphas = smoP(dataArr, labelArr, 200, 0.0001, 10000, kTup)
-    datMat = mat(dataArr);
+    datMat = mat(dataArr)
     labelMat = mat(labelArr).transpose()
     svInd = nonzero(alphas.A > 0)[0]
     sVs = datMat[svInd]
-    labelSV = labelMat[svInd];
+    labelSV = labelMat[svInd]
     print "there are %d Support Vectors" % shape(sVs)[0]
     m, n = shape(datMat)
     errorCount = 0
@@ -295,7 +295,7 @@ def testDigits(kTup=('rbf', 10)):
     print "the training error rate is: %f" % (float(errorCount) / m)
     dataArr, labelArr = loadImages('trainingdigit/testdigits-for-svm')
     errorCount = 0
-    datMat = mat(dataArr);
+    datMat = mat(dataArr)
     labelMat = mat(labelArr).transpose()
     m, n = shape(datMat)
     for i in range(m):
@@ -338,8 +338,8 @@ def calcEkK(oS, k):
 
 
 def selectJK(i, oS, Ei):  # this is the second choice -heurstic, and calcs Ej
-    maxK = -1;
-    maxDeltaE = 0;
+    maxK = -1
+    maxDeltaE = 0
     Ej = 0
     oS.eCache[i] = [1, Ei]  # set valid #choose the alpha that gives the maximum delta E
     validEcacheList = nonzero(oS.eCache[:, 0].A)[0]
@@ -349,8 +349,8 @@ def selectJK(i, oS, Ei):  # this is the second choice -heurstic, and calcs Ej
             Ek = calcEk(oS, k)
             deltaE = abs(Ei - Ek)
             if (deltaE > maxDeltaE):
-                maxK = k;
-                maxDeltaE = deltaE;
+                maxK = k
+                maxDeltaE = deltaE
                 Ej = Ek
         return maxK, Ej
     else:  # in this case (first time around) we don't have any valid eCache values
@@ -369,8 +369,8 @@ def innerLK(i, oS):
     if ((oS.labelMat[i] * Ei < -oS.tol) and (oS.alphas[i] < oS.C)) or (
                 (oS.labelMat[i] * Ei > oS.tol) and (oS.alphas[i] > 0)):
         j, Ej = selectJ(i, oS, Ei)  # this has been changed from selectJrand
-        alphaIold = oS.alphas[i].copy();
-        alphaJold = oS.alphas[j].copy();
+        alphaIold = oS.alphas[i].copy()
+        alphaJold = oS.alphas[j].copy()
         if (oS.labelMat[i] != oS.labelMat[j]):
             L = max(0, oS.alphas[j] - oS.alphas[i])
             H = min(oS.C, oS.C + oS.alphas[j] - oS.alphas[i])
@@ -404,7 +404,7 @@ def innerLK(i, oS):
 def smoPK(dataMatIn, classLabels, C, toler, maxIter):  # full Platt SMO
     oS = optStruct(mat(dataMatIn), mat(classLabels).transpose(), C, toler)
     iter = 0
-    entireSet = True;
+    entireSet = True
     alphaPairsChanged = 0
     while (iter < maxIter) and ((alphaPairsChanged > 0) or (entireSet)):
         alphaPairsChanged = 0

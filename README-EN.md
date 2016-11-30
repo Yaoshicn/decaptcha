@@ -1,46 +1,45 @@
 # Decaptcha
-English version Readme is available [here](README-EN.md) .
+This simple Python programme can help recognize captcha. The main function is implemented by some machine learning algorithms.
 
-通过简单的图像识别算法来完成验证码识别，打算把机器学习中的分类算法全部使用一遍。
+## How to?
+1. Get the captcha using a crawler
+2. Image processing
+3. Label the training sample 
+4. Load the training set
+5. Test with test set
 
-## 使用方法
-1. 爬取验证码
-2. 对图像做处理并切分
-3. 手工标注数据
-4. 导入训练集
-5. 使用测试集
-
-## 前期准备
-1. Image (图像处理库)
+## Before You Start
+1. Image (Lib for Processing Images)
     - [jpeg](http://www.ijg.org/files/)
     - [zlib](http://www.zlib.net)
     - [PIL](http://effbot.org/imagingbook/introduction.htm#using-the-image-class)
 
-2. numpy (数学处理库)
+2. numpy (Lib for Handling Math Problems)
 
-3. ImageEnhance (图像处理库)
+3. ImageEnhance (Lib for Processing Images)
 ```Python
-enhancer = ImageEnhance.Contrast(img)    # 增加对比对
+enhancer = ImageEnhance.Contrast(img)    # Increase contrase
 img = enhancer.enhance(2)
-enhancer = ImageEnhance.Sharpness(img)   # 锐化
+enhancer = ImageEnhance.Sharpness(img)   # Sharper image
 img = enhancer.enhance(2)
-enhancer = ImageEnhance.Brightness(img)  # 增加亮度
+enhancer = ImageEnhance.Brightness(img)  # Increase brightness
 img = enhancer.enhance(2)
 ```
 
-## 图像处理
-### 静态图片
-1. 清除图片噪点
-2. 清除图片干扰线
-3. 切割图片
-4. 信息输出
+## How to Handle with a Captcha
 
-### 动态图片
-1. 按帧转存 GIF
-2. 读取每个 GIF 的 Duration 属性
-3. 找到 Duration 最长的图片，后同静态图片处理
+### For Statical Image
+1. Remove image noise
+2. Clear interference line
+3. Cutting picture
+4. Output information
 
-## 识别算法
+### For GIF
+1. Save the GIF frame by frame
+2. Get the durations between every 2 frame
+3. The target frame may have the longest pause time
+
+## Algorithms for Recognizing
 ### KNN
 ```Python
 # kNN algorithm
@@ -60,9 +59,9 @@ def classify0(inX, dataSet, labels, k):
 ```
 
 ### SVM
-根据算法的性质，可以问题设定成一个二分类问题：识别数字1和2（当然也可以是其他的任意两个数字)。
+SVM can help recognize two different characters, such as "1" and "2". 
 
-## 参考
+## References
 - http://www.csie.ntu.edu.tw/~cjlin/libsvm/index.html?js=1#svm-toy-js
 - http://www.pami.sjtu.edu.cn/people/gpliu/document/libsvm_src.pdf
 

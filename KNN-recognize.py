@@ -1,4 +1,4 @@
-# __author__ = 'guchaojie'
+# __author__ = 'Yaoshi'
 # -*- coding: utf-8 -*-
 import operator
 from numpy import *
@@ -6,7 +6,6 @@ from numpy import *
 
 def handwritingClassTest():
     hwLabels = []
-    # trainingFileList = os.listdir('trainingdigit/trainingset')
     trainingFileList = listDirInMac('trainingdigit/trainingdigits-for-knn')
     m = len(trainingFileList)
     trainingMat = zeros((m, 1024))
@@ -15,7 +14,6 @@ def handwritingClassTest():
         classStr = fnameStr.split("_")[0]
         hwLabels.append(classStr)
         trainingMat[i, :] = img2vector('trainingdigit/trainingdigits-for-knn/%s' % fnameStr)
-    # testFileList = os.listdir('trainingdigit/testdigits')
     testFileList = listDirInMac('trainingdigit/testdigits-for-knn')
     errorCount = 0.0
     mTest = len(testFileList)
@@ -65,9 +63,9 @@ def img2vector(fname):
 
 def file2matrix(filename):
     fr = open(filename)
-    numberOfLines = len(fr.readlines())  # get the number of lines in the file
+    numberOfLines = len(fr.readlines())    # get the number of lines in the file
     returnMat = zeros((numberOfLines, 3))  # prepare matrix to return
-    classLabelVector = []  # prepare labels return
+    classLabelVector = []                  # prepare labels return
     fr = open(filename)
     index = 0
     for line in fr.readlines():

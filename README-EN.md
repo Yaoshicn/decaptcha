@@ -64,6 +64,7 @@ SVM can help recognize two different characters, such as "1" and "2".
 ## References
 - http://www.csie.ntu.edu.tw/~cjlin/libsvm/index.html?js=1#svm-toy-js
 - http://www.pami.sjtu.edu.cn/people/gpliu/document/libsvm_src.pdf
+- Machine Learning in Action
 
 ## License
 MIT

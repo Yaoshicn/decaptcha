@@ -65,6 +65,7 @@ def classify0(inX, dataSet, labels, k):
 ## 参考
 - http://www.csie.ntu.edu.tw/~cjlin/libsvm/index.html?js=1#svm-toy-js
 - http://www.pami.sjtu.edu.cn/people/gpliu/document/libsvm_src.pdf
+- Machine Learning in Action
 
 ## License
 MIT
